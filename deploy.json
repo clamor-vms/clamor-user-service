@@ -1,0 +1,88 @@
+{
+    "Title": "Skaioskit User Service",
+    "Commands": {
+        "_build": {
+            "Requires": [],
+            "Steps": [
+                {
+                    "Type": "RunCommand",
+                    "Args": {
+                        "Command": [
+                            "docker",
+                            "run",
+                            "--rm",
+                            "-v",
+                            "${DIR}/src:/go/src/skaioskit",
+                            "-w",
+                            "/go/src/skaioskit",
+                            "lushdigital/docker-golang-dep",
+                            "ensure"
+                        ]
+                    }
+                },
+                {
+                    "Type": "RunCommand",
+                    "Args": {
+                        "Command": [
+                            "docker",
+                            "run",
+                            "--rm",
+                            "-v",
+                            "${DIR}/src:/go/src/skaioskit",
+                            "-w",
+                            "/go/src/skaioskit",
+                            "golang:latest",
+                            "go",
+                            "build",
+                            "-ldflags",
+                            "-linkmode external -extldflags -static",
+                            "-o",
+                            "user"
+                        ]
+                    }
+                }
+            ]
+        },
+
+        "_pack": {
+            "Requires": [],
+            "Steps": [
+                {
+                    "Type": "RunCommand",
+                    "Args": {
+                        "Command": [
+                            "docker",
+                            "build",
+                            "-f",
+                            "./Dockerfile",
+                            "-t",
+                            "localhost:5000/skaioskit/user-service",
+                            "."
+                        ]
+                    }
+                }
+            ]
+        },
+
+        "_upload": {
+            "Requires": [],
+            "Steps": [
+                {
+                    "Type": "RunCommand",
+                    "Args": {
+                        "Command": [
+                            "docker",
+                            "push",
+                            "localhost:5000/skaioskit/user-service"
+                        ]
+                    }
+                }
+            ]
+        },
+
+        "build": {
+            "Requires": ["_build", "_pack", "_upload"],
+            "Steps": []
+        }
+    }
+}
