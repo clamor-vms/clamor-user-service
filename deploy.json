@@ -83,6 +83,72 @@
         "build": {
             "Requires": ["_build", "_pack", "_upload"],
             "Steps": []
+        },
+        
+        "deploy": {
+            "Requires": ["build"],
+            "Steps": [
+                {
+                    "Type": "EnsureSecret",
+                    "Args": {
+                        "Key": "skaioskit-user-service-mysql-password"
+                    }
+                },
+                {
+                    "Type": "EnsureSecret",
+                    "Args": {
+                        "Key": "skaioskit-user-service-mysql-root-password"
+                    }
+                },
+                {
+                    "Type": "CopyFile",
+                    "Args": {
+                        "Source": "k8s/deployment.template.yaml",
+                        "Target": "deployment.yaml"
+                    }
+                },
+                {
+                    "Type": "RunTemplate",
+                    "Args": {
+                        "File": "deployment.yaml"
+                    }
+                },
+                {
+                    "Type": "DoublePipeCommand",
+                    "Args": {
+                        "Source": [
+                            "cat",
+                            "deployment.yaml"
+                        ],
+                        "Target1": [
+                            "envsubst"
+                        ],
+                        "Target2": [
+                            "kubectl",
+                            "apply",
+                            "-f",
+                            "-"
+                        ]
+                    }
+                }
+            ]
+        },
+
+        "stop": {
+            "Requires": [],
+            "Steps": [
+                {
+                    "Type": "RunCommand",
+                    "Args": {
+                        "Command": [
+                            "kubectl",
+                            "delete",
+                            "deployments,services,pods,pv,pvc,cronjob,job",
+                            "--all"
+                        ]
+                    }
+                }
+            ]
         }
     }
 }

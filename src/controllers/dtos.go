@@ -16,6 +16,7 @@
 package controllers
 
 type GetAboutResponse struct {
+    Name string
     CoreVersion string
     Version string
     BuildTime string

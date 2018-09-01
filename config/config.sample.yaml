@@ -1,3 +1,0 @@
-mysql-connection-str: skaioskit:password@tcp(user-service)/user?charset=utf8&parseTime=True&loc=Local
-port-number: 80
-jwt-key: test
