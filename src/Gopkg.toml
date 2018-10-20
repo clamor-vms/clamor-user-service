@@ -35,7 +35,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/nathanmentley/skaioskit-go-core"
+  name = "github.com/clamor-vms/clamor-go-core"
 
 [[constraint]]
   name = "github.com/spf13/cobra"

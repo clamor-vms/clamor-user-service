@@ -18,9 +18,9 @@ package controllers
 import (
     "net/http"
 
-    skaioskit "github.com/nathanmentley/skaioskit-go-core"
+    clamor "github.com/clamor-vms/clamor-go-core"
 
-    "skaioskit/services"
+    "clamor/services"
 )
 
 type UserController struct {
@@ -31,15 +31,15 @@ func NewUserController(userService services.IUserService) *UserController {
         userService: userService,
     }
 }
-func (p *UserController) Get(w http.ResponseWriter, r *http.Request) skaioskit.ControllerResponse {
-    return skaioskit.ControllerResponse{Status: http.StatusNotFound, Body: skaioskit.EmptyResponse{}}
+func (p *UserController) Get(w http.ResponseWriter, r *http.Request) clamor.ControllerResponse {
+    return clamor.ControllerResponse{Status: http.StatusNotFound, Body: clamor.EmptyResponse{}}
 }
-func (p *UserController) Post(w http.ResponseWriter, r *http.Request) skaioskit.ControllerResponse {
-    return skaioskit.ControllerResponse{Status: http.StatusNotFound, Body: skaioskit.EmptyResponse{}}
+func (p *UserController) Post(w http.ResponseWriter, r *http.Request) clamor.ControllerResponse {
+    return clamor.ControllerResponse{Status: http.StatusNotFound, Body: clamor.EmptyResponse{}}
 }
-func (p *UserController) Put(w http.ResponseWriter, r *http.Request) skaioskit.ControllerResponse {
-    return skaioskit.ControllerResponse{Status: http.StatusNotFound, Body: skaioskit.EmptyResponse{}}
+func (p *UserController) Put(w http.ResponseWriter, r *http.Request) clamor.ControllerResponse {
+    return clamor.ControllerResponse{Status: http.StatusNotFound, Body: clamor.EmptyResponse{}}
 }
-func (p *UserController) Delete(w http.ResponseWriter, r *http.Request) skaioskit.ControllerResponse {
-    return skaioskit.ControllerResponse{Status: http.StatusNotFound, Body: skaioskit.EmptyResponse{}}
+func (p *UserController) Delete(w http.ResponseWriter, r *http.Request) clamor.ControllerResponse {
+    return clamor.ControllerResponse{Status: http.StatusNotFound, Body: clamor.EmptyResponse{}}
 }

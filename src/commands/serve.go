@@ -24,11 +24,11 @@ import (
     "github.com/jinzhu/gorm"
     _ "github.com/jinzhu/gorm/dialects/mysql"
 
-    skaioskit "github.com/nathanmentley/skaioskit-go-core"
+    clamor "github.com/clamor-vms/clamor-go-core"
 
-    "skaioskit/core"
-    "skaioskit/services"
-    "skaioskit/controllers"
+    "clamor/core"
+    "clamor/services"
+    "clamor/controllers"
 )
 
 var serveCmd = &cobra.Command{
@@ -37,7 +37,7 @@ var serveCmd = &cobra.Command{
     Long:  `runs the rest api`,
     Run: func(cmd *cobra.Command, args []string) {
         //setup db connection
-        conStr := skaioskit.BuildMySqlConnectionString(core.DATABASE_USER, os.Getenv("MYSQL_PASSWORD"), core.DATABASE_HOST, core.DATABASE_NAME)
+        conStr := clamor.BuildMySqlConnectionString(core.DATABASE_USER, os.Getenv("MYSQL_PASSWORD"), core.DATABASE_HOST, core.DATABASE_NAME)
         db, err := gorm.Open("mysql", conStr)
         if err != nil {
             panic(err)
@@ -48,8 +48,8 @@ var serveCmd = &cobra.Command{
         userService := services.NewUserService(db)
 
         //build controllers
-        aboutController := skaioskit.NewControllerProcessor(controllers.NewAboutController())
-        userController := skaioskit.NewControllerProcessor(controllers.NewUserController(userService))
+        aboutController := clamor.NewControllerProcessor(controllers.NewAboutController())
+        userController := clamor.NewControllerProcessor(controllers.NewUserController(userService))
 
         //setup routing to controllers
         r := mux.NewRouter()
@@ -57,8 +57,8 @@ var serveCmd = &cobra.Command{
         r.HandleFunc("/user", userController.Logic)
 
         //wrap everything behind a jwt middleware
-        jwtMiddleware := skaioskit.JWTEnforceMiddleware([]byte(os.Getenv("JWT_SECRET")))
-        http.Handle("/", skaioskit.PanicHandler(jwtMiddleware(r)))
+        jwtMiddleware := clamor.JWTEnforceMiddleware([]byte(os.Getenv("JWT_SECRET")))
+        http.Handle("/", clamor.PanicHandler(jwtMiddleware(r)))
 
         //server up app
         if err := http.ListenAndServe(":" + core.PORT_NUMBER, nil); err != nil {

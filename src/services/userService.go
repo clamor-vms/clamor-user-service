@@ -18,7 +18,7 @@ package services
 import (
     "github.com/jinzhu/gorm"
 
-    "skaioskit/models"
+    "clamor/models"
 )
 
 type IUserService interface {
