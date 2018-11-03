@@ -56,7 +56,7 @@
                             "-f",
                             "./Dockerfile",
                             "-t",
-                            "localhost:5000/clamor/user-service",
+                            "${DOCKER_REG}/clamor/user-service",
                             "."
                         ]
                     }
@@ -73,7 +73,7 @@
                         "Command": [
                             "docker",
                             "push",
-                            "localhost:5000/clamor/user-service"
+                            "${DOCKER_REG}/clamor/user-service"
                         ]
                     }
                 }

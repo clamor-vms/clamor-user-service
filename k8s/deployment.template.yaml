@@ -72,7 +72,7 @@ spec:
     spec:
       containers:
       - name: user-service
-        image: localhost:5000/clamor/user-service:latest
+        image: ${DOCKER_REG}/clamor/user-service:latest
         imagePullPolicy: Always
         command: 
         - /user
