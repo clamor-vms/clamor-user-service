@@ -82,24 +82,7 @@
 
         "build": {
             "Requires": ["_build", "_pack", "_upload"],
-            "Steps": []
-        },
-        
-        "deploy": {
-            "Requires": ["build"],
             "Steps": [
-                {
-                    "Type": "EnsureSecret",
-                    "Args": {
-                        "Key": "clamor-user-service-mysql-password"
-                    }
-                },
-                {
-                    "Type": "EnsureSecret",
-                    "Args": {
-                        "Key": "clamor-user-service-mysql-root-password"
-                    }
-                },
                 {
                     "Type": "CopyFile",
                     "Args": {
@@ -111,6 +94,24 @@
                     "Type": "RunTemplate",
                     "Args": {
                         "File": "deployment.yaml"
+                    }
+                }
+            ]
+        },
+        
+        "deploy": {
+            "Requires": [],
+            "Steps": [
+                {
+                    "Type": "EnsureSecret",
+                    "Args": {
+                        "Key": "clamor-user-service-mysql-password"
+                    }
+                },
+                {
+                    "Type": "EnsureSecret",
+                    "Args": {
+                        "Key": "clamor-user-service-mysql-root-password"
                     }
                 },
                 {
