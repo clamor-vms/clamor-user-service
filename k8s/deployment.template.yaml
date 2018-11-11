@@ -1,3 +1,25 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: user-mysql-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: user-log-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30Gi
+---
 apiVersion: apps/v1beta2 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
@@ -43,8 +65,8 @@ spec:
           mountPath: /var/lib/mysql
       volumes:
       - name: mysql-persistent-storage
-        hostPath:
-          path: "${DIR}/working/mysql"
+        persistentVolumeClaim:
+          claimName: user-mysql-volume-claim
 ---
 kind: Service
 apiVersion: v1
@@ -97,8 +119,8 @@ spec:
           mountPath: /logs
       volumes:
       - name: log-storage
-        hostPath:
-          path: "${DIR}/working/logs"
+        persistentVolumeClaim:
+          claimName: user-log-volume-claim
 ---
 kind: Service
 apiVersion: v1
