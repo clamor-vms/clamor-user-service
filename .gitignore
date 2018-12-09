@@ -18,4 +18,3 @@ src/user
 src/vendor
 src/vendor.orig
 config/config.yaml
-deployment.yaml
